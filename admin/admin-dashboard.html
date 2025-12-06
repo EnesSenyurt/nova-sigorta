@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Nova Sigorta</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar { min-height: 100vh; background-color: #343a40; color: white; }
+        .sidebar a { color: #cfd8dc; text-decoration: none; padding: 15px; display: block; }
+        .sidebar a:hover, .sidebar a.active { background-color: #0d6efd; color: white; }
+    </style>
+</head>
+<body>
+
+<div class="d-flex">
+    <div class="sidebar p-3" style="width: 250px;">
+        <h4 class="text-center mb-4">Nova Panel</h4>
+        
+        <a href="admin-dashboard.html" class="active"><i class="fa fa-chart-line me-2"></i> Özet Paneli</a>
+        <a href="admin-duyuru.html"><i class="fa fa-bullhorn me-2"></i> Duyuru Ekle</a>
+        <a href="admin-mesajlar.html"><i class="fa fa-envelope me-2"></i> Gelen Kutusu</a>
+        
+        <hr>
+        <a href="../index.html" class="text-danger"><i class="fa fa-sign-out-alt me-2"></i> Çıkış Yap</a>
+    </div>
+
+    <div class="flex-grow-1 bg-light p-4">
+        <h2 class="mb-4">Hoşgeldiniz, Nova Admin</h2>       
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Yayınlanan Duyurular</h5>
+                        <button onclick="tumunuTemizle()" class="btn btn-sm btn-danger">Tüm Verileri Sıfırla</button>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead><tr><th>ID</th><th>Tarih</th><th>Başlık</th><th>Kategori</th><th>İşlem</th></tr></thead>
+                                <tbody id="duyuruTabloGovdesi"></tbody>
+                            </table>
+                        </div>
+                        <p id="bosMesaj" class="text-center text-muted mt-3" style="display:none;">Henüz eklenmiş bir duyuru yok.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // --- GRAFİKLER ---
+    const ctx1 = document.getElementById('satisGrafigi').getContext('2d');
+    new Chart(ctx1, { type: 'line', data: { labels: ['Oca','Şub','Mar','Nis','May','Haz'], datasets: [{ label: 'Satış', data: [12, 19, 3, 5, 20, 30], borderColor: '#0d6efd', tension: 0.1 }] } });
+
+    const ctx2 = document.getElementById('urunPastasi').getContext('2d');
+    new Chart(ctx2, { type: 'pie', data: { labels: ['Kasko','Konut','Sağlık','DASK'], datasets: [{ data: [30, 40, 20, 10], backgroundColor: ['#0d6efd', '#198754', '#dc3545', '#ffc107'] }] } });
+
+    // --- TABLO YÖNETİMİ ---
+    document.addEventListener('DOMContentLoaded', function() { tabloyuGuncelle(); });
+
+    function tabloyuGuncelle() {
+        const duyurular = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
+        const tBody = document.getElementById('duyuruTabloGovdesi');
+        const msg = document.getElementById('bosMesaj');
+        tBody.innerHTML = '';
+        if (duyurular.length === 0) { msg.style.display = 'block'; } else {
+            msg.style.display = 'none';
+            duyurular.forEach(d => {
+                tBody.innerHTML += `<tr><td>#${d.id}</td><td>${d.tarih}</td><td><strong>${d.baslik}</strong></td><td><span class="badge bg-info text-dark">${d.kategori}</span></td><td><button onclick="sil(${d.id})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i> Sil</button></td></tr>`;
+            });
+        }
+    }
+
+    function sil(id) {
+        if(confirm('Silmek istediğinize emin misiniz?')) {
+            let list = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
+            list = list.filter(x => x.id !== id);
+            localStorage.setItem('tumDuyurular', JSON.stringify(list));
+            tabloyuGuncelle();
+        }
+    }
+
+    function tumunuTemizle() {
+        if(confirm('Tüm duyurular silinecek!')) { localStorage.removeItem('tumDuyurular'); tabloyuGuncelle(); }
+    }
+</script>
+</body>
+</html>
