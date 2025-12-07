@@ -74,38 +74,31 @@
         const icerik = document.getElementById('duyuruIcerik').value;
         const dosyaInput = document.getElementById('duyuruDosya'); 
         const tarih = new Date().toLocaleDateString('tr-TR');
-
-        // Dosya okuyucu oluşturuyoruz
         const reader = new FileReader();
-
-        // Varsayılan resim (Eğer resim seçmezsen bu görünür)
+        
         let resimData = '../img/blog-1.png'; 
         let dosyaAdi = "";
         let dosyaTipi = "";
 
-        // Eğer kullanıcı bir dosya seçtiyse
         if (dosyaInput.files.length > 0) {
             const file = dosyaInput.files[0];
             dosyaAdi = file.name;
 
-            // Dosya tipini belirle (ikon için)
             if (dosyaAdi.endsWith('.pdf')) { dosyaTipi = 'pdf'; }
             else if (dosyaAdi.endsWith('.doc') || dosyaAdi.endsWith('.docx')) { dosyaTipi = 'word'; }
             else if (dosyaAdi.match(/\.(jpg|jpeg|png)$/i)) { dosyaTipi = 'image'; }
             else { dosyaTipi = 'file'; }
 
-            // Resmi okumaya başla
             reader.readAsDataURL(file);
         } else {
-            // Resim seçilmediyse direkt kaydet
             kaydetVeBitir(baslik, kategori, icerik, tarih, resimData, dosyaAdi, dosyaTipi);
         }
 
-        // Okuma bitince çalışacak fonksiyon (Asıl işlem burada)
+        
         reader.onload = function () {
-            // Eğer yüklenen dosya bir resimse, onu kapak resmi yap
+            
             if (dosyaTipi === 'image') {
-                resimData = reader.result; // Resmin kodlanmış hali (Base64)
+                resimData = reader.result; 
             }
             kaydetVeBitir(baslik, kategori, icerik, tarih, resimData, dosyaAdi, dosyaTipi);
         };
@@ -117,12 +110,12 @@
                 kategori: kat,
                 icerik: icerik,
                 tarih: tar,
-                resim: img, // Artık seçilen resim buraya gidiyor
+                resim: img, 
                 dosyaAdi: dAdi,
                 dosyaTipi: dTipi
             };
 
-            // LocalStorage işlemlerini yap (Hata önleyici try-catch ekledim)
+            
             try {
                 let duyurular = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
                 duyurular.unshift(yeniKayit);
