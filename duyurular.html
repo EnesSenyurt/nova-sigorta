@@ -170,8 +170,7 @@
        <div class="container-fluid blog py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Duyurular ve Kampanyalar</h4>
-                    <h1 class="display-4 mb-4">Güncel haberler</h1>                  
+                    <h4 class="text-primary">Duyurular ve Kampanyalar</h4>                                     
                 </div>
                 <div class="row g-4 justify-content-center">
                     <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
@@ -189,12 +188,13 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.4s">
                         <div class="blog-item">
                             <div class="blog-img">
                                 <img src="img/blog-2.png" class="img-fluid rounded-top w-100" alt="">
                                 <div class="blog-categiry py-2 px-4">
-                                    <span>Sağlık</span>
+                                    <span>Kampanya</span>
                                 </div>
                             </div>
                             <div class="blog-content p-4">                               
@@ -397,7 +397,7 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
-        <!--Modal yapısı-->
+        <!--Duyurular kısmı modal yapısı -->
         <div class="modal fade" id="modalDuyuru1" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -480,6 +480,125 @@
             </div>
         </div>
         </div>
+        <!--Yeni eklenecek duyurular için dinamik modal-->
+        <div class="modal fade" id="dynamicModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="dynModalBaslik">Duyuru Detayı</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Kapat"></button>
+            </div>
+            <div class="modal-body">
+                
+                <div class="text-center mb-3">
+                    <img id="dynModalResim" src="" class="img-fluid rounded" style="max-height: 300px; display: none;" alt="Duyuru Görseli">
+                </div>
+
+                <div id="dynModalIcerik" class="text-secondary">
+                    </div>
+
+                <hr>              
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+            </div>
+        </div>
+        </div>
+        <!--Dinamik modal end-->
+        
+
+        <!--Duyuru ekleme scripti-->
+        <script>
+        let tumDuyurular = [];
+        document.addEventListener('DOMContentLoaded', function() {            
+            tumDuyurular = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
+            const listeKutusu = document.getElementById('duyuruListesi');
+            
+            tumDuyurular.forEach(duyuru => {              
+                let gorselYolu = duyuru.resim;
+                if (!gorselYolu.startsWith('data:')) {
+                    gorselYolu = gorselYolu.replace('../', '');
+                }                
+                let dosyaHTML = '';
+                if (duyuru.dosyaAdi) {
+                    let ikon = 'fa-file'; 
+                    let renk = 'btn-outline-dark';
+                    if (duyuru.dosyaTipi === 'pdf') { ikon = 'fa-file-pdf'; renk = 'btn-outline-danger'; } 
+                    else if (duyuru.dosyaTipi === 'word') { ikon = 'fa-file-word'; renk = 'btn-outline-primary'; }
+                    else if (duyuru.dosyaTipi === 'image') { ikon = 'fa-image'; renk = 'btn-outline-success'; }
+
+                    
+                }                
+                const htmlKart = `
+                <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="blog-item bg-light rounded overflow-hidden shadow h-100">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <img src="${gorselYolu}" class="img-fluid w-100" style="height: 250px; object-fit: cover;" alt="">
+                            <div class="blog-categiry py-2 px-4">
+                                <span>${duyuru.kategori}</span>
+                            </div>
+                        </div>
+                        <div class="blog-content p-4">
+                            <div class="blog-comment d-flex justify-content-between mb-3">
+                                <div class="small"><span class="fa fa-calendar text-primary me-2"></span> ${duyuru.tarih}</div>                                
+                            </div>
+                            
+                            <a href="javascript:void(0)" class="h4 d-inline-block mb-3 text-dark text-decoration-none" onclick="detayAc(${duyuru.id})">${duyuru.baslik}</a>
+                            
+                            <p class="mb-3 text-muted">${duyuru.icerik.substring(0, 100)}${duyuru.icerik.length > 100 ? '...' : ''}</p>
+                            
+                            <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none" onclick="detayAc(${duyuru.id})">
+                                Detaylı Bilgi <i class="fa fa-arrow-right ms"></i>
+                            </a>                            
+                            
+                        </div>
+                    </div>
+                </div>`;
+
+                listeKutusu.insertAdjacentHTML('afterbegin', htmlKart);
+            });
+        });        
+        function detayAc(id) {            
+            const secilen = tumDuyurular.find(d => d.id === id);
+
+            if (secilen) {                
+                const modalBaslik = document.getElementById('dynModalBaslik');
+                const modalIcerik = document.getElementById('dynModalIcerik');
+                const modalResim = document.getElementById('dynModalResim');
+                const modalDosyaAlani = document.getElementById('dynModalDosyaAlani');
+                const modalLink = document.getElementById('dynModalLink');
+                const modalDosyaAdi = document.getElementById('dynModalDosyaAdi');
+                const modalIcon = document.getElementById('dynModalIcon');
+                
+                modalBaslik.innerText = secilen.baslik;
+                modalIcerik.innerText = secilen.icerik;
+                
+                let gorselYolu = secilen.resim;
+                if (!gorselYolu.startsWith('data:')) { gorselYolu = gorselYolu.replace('../', ''); }
+                modalResim.src = gorselYolu;
+                modalResim.style.display = 'block';
+                
+                if (secilen.dosyaAdi) {
+                    modalDosyaAlani.style.display = 'block';
+                    modalDosyaAdi.innerText = secilen.dosyaAdi + " (İndir)";                
+                    modalIcon.className = "fa me-2"; 
+                    if (secilen.dosyaTipi === 'pdf') modalIcon.classList.add('fa-file-pdf');
+                    else if (secilen.dosyaTipi === 'word') modalIcon.classList.add('fa-file-word');
+                    else if (secilen.dosyaTipi === 'image') modalIcon.classList.add('fa-image');
+                    else modalIcon.classList.add('fa-file');
+                } 
+                else {
+                    modalDosyaAlani.style.display = 'none';
+                }                
+                var myModal = new bootstrap.Modal(document.getElementById('dynamicModal'));
+                myModal.show();
+            }
+        }
+        </script>
+        <!--Duyuru ekleme scripti end-->
+
     </body>
 
 </html>
