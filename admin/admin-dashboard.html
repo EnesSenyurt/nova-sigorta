@@ -52,40 +52,67 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // --- GRAFİKLER ---
     const ctx1 = document.getElementById('satisGrafigi').getContext('2d');
     new Chart(ctx1, { type: 'line', data: { labels: ['Oca','Şub','Mar','Nis','May','Haz'], datasets: [{ label: 'Satış', data: [12, 19, 3, 5, 20, 30], borderColor: '#0d6efd', tension: 0.1 }] } });
 
     const ctx2 = document.getElementById('urunPastasi').getContext('2d');
-    new Chart(ctx2, { type: 'pie', data: { labels: ['Kasko','Konut','Sağlık','DASK'], datasets: [{ data: [30, 40, 20, 10], backgroundColor: ['#0d6efd', '#198754', '#dc3545', '#ffc107'] }] } });
+    new Chart(ctx2, { type: 'pie', data: { labels: ['Kasko','Trafik','Sağlık','DASK'], datasets: [{ data: [30, 40, 20, 10], backgroundColor: ['#0d6efd', '#198754', '#dc3545', '#ffc107'] }] } });
 
-    // --- TABLO YÖNETİMİ ---
-    document.addEventListener('DOMContentLoaded', function() { tabloyuGuncelle(); });
+    document.addEventListener('DOMContentLoaded', function() {
+        tabloyuGuncelle();
+    });
 
     function tabloyuGuncelle() {
         const duyurular = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
         const tBody = document.getElementById('duyuruTabloGovdesi');
         const msg = document.getElementById('bosMesaj');
-        tBody.innerHTML = '';
-        if (duyurular.length === 0) { msg.style.display = 'block'; } else {
-            msg.style.display = 'none';
+
+        if(tBody) tBody.innerHTML = ''; 
+
+        if (duyurular.length === 0) {
+            if(msg) msg.style.display = 'block';
+        } else {
+            if(msg) msg.style.display = 'none';
+            
             duyurular.forEach(d => {
-                tBody.innerHTML += `<tr><td>#${d.id}</td><td>${d.tarih}</td><td><strong>${d.baslik}</strong></td><td><span class="badge bg-info text-dark">${d.kategori}</span></td><td><button onclick="sil(${d.id})" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i> Sil</button></td></tr>`;
+                let dosyaBilgisi = '<span class="text-muted">-</span>';
+                if(d.dosyaAdi) {
+                    dosyaBilgisi = `<span class="badge bg-secondary"><i class="fa fa-paperclip"></i> ${d.dosyaAdi}</span>`;
+                }
+
+                const satir = `
+                    <tr>
+                        <td>#${d.id}</td>
+                        <td>${d.tarih}</td>
+                        <td><strong>${d.baslik}</strong></td>
+                        <td><span class="badge bg-info text-dark">${d.kategori}</span></td>
+                        <td>${dosyaBilgisi}</td>
+                        <td>
+                            <button onclick="duyuruSil(${d.id})" class="btn btn-sm btn-outline-danger" title="Sil">
+                                <i class="fa fa-trash"></i> Sil
+                            </button>
+                        </td>
+                    </tr>
+                `;
+                if(tBody) tBody.innerHTML += satir;
             });
         }
     }
 
-    function sil(id) {
-        if(confirm('Silmek istediğinize emin misiniz?')) {
-            let list = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
-            list = list.filter(x => x.id !== id);
-            localStorage.setItem('tumDuyurular', JSON.stringify(list));
+    function duyuruSil(silinecekId) {
+        if(confirm('Bu duyuruyu silmek istediğinize emin misiniz?')) {
+            let duyurular = JSON.parse(localStorage.getItem('tumDuyurular')) || [];
+            const yeniListe = duyurular.filter(item => item.id !== silinecekId);
+            localStorage.setItem('tumDuyurular', JSON.stringify(yeniListe));
             tabloyuGuncelle();
         }
     }
 
     function tumunuTemizle() {
-        if(confirm('Tüm duyurular silinecek!')) { localStorage.removeItem('tumDuyurular'); tabloyuGuncelle(); }
+        if(confirm('Tüm duyurular silinecek. Emin misiniz?')) {
+            localStorage.removeItem('tumDuyurular');
+            tabloyuGuncelle();
+        }
     }
 </script>
 </body>
