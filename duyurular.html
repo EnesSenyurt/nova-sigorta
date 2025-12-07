@@ -568,7 +568,8 @@
                         </div>
                         <div class="blog-content p-4">
                             <div class="blog-comment d-flex justify-content-between mb-3">
-                                <div class="small"><span class="fa fa-calendar text-primary me-2"></span> ${duyuru.tarih}</div>                                
+                                <div class="small"><span class="fa fa-calendar text-primary me-2"></span> ${duyuru.tarih}</div>
+                                <div class="small"><span class="fa fa-user text-primary me-2"></span> Admin</div>
                             </div>
                             
                             <a href="javascript:void(0)" class="h4 d-inline-block mb-3 text-dark text-decoration-none" onclick="detayAc(${duyuru.id})">${duyuru.baslik}</a>
@@ -577,8 +578,9 @@
                             
                             <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none" onclick="detayAc(${duyuru.id})">
                                 Detaylı Bilgi <i class="fa fa-arrow-right ms"></i>
-                            </a>                            
+                            </a>
                             
+                            ${dosyaHTML} 
                         </div>
                     </div>
                 </div>`;

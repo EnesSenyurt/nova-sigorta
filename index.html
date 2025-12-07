@@ -180,7 +180,7 @@
                             </div>
                             <div class="col-lg-5 animated fadeInRight">
                                 <div class="calrousel-img" style="object-fit: cover;">
-                                    <img src="img/blog-1.png" class="img-fluid w-100" alt="">
+                                    <img src="img/arac-sigortasi2.png" class="img-fluid w-100" alt="">
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                         <div class="row gy-4 gy-lg-0 gx-0 gx-lg-5 align-items-center">
                             <div class="col-lg-5 animated fadeInLeft">
                                 <div class="calrousel-img">
-                                    <img src="img/blog-4.png" class="img-fluid w-100" alt="">
+                                    <img src="img/saglik-sigortasi4.png" class="img-fluid w-100" alt="">
                                 </div>
                             </div>
                             <div class="col-lg-7 animated fadeInRight">
@@ -216,7 +216,7 @@
                         <div class="row gy-4 gy-lg-0 gx-0 gx-lg-5 align-items-center">
                             <div class="col-lg-5 animated fadeInLeft">
                                 <div class="calrousel-img">
-                                    <img src="img/carousel-2.png" class="img-fluid w-100" alt="">
+                                    <img src="img/Konut_Sigortasi.png" class="img-fluid w-100" alt="">
                                 </div>
                             </div>
                             <div class="col-lg-7 animated fadeInRight">
@@ -473,8 +473,7 @@
            <div class="container-fluid blog py-5">
             <div class="container py-5">
                 <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.2s" style="max-width: 800px;">
-                    <h4 class="text-primary">Duyurular ve Kampanyalar</h4>
-                    <h1 class="display-4 mb-4">Güncel haberler</h1>                  
+                    <h1 class="display-4 mb-4">Duyurular ve Kampanyalar</h1>                  
                 </div>
                 <div class="row g-4 justify-content-center" id="duyuruListesi">
                     <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.2s">
@@ -911,7 +910,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Deprem bölgesinde yer alan ülkemizde DASK hayati önem taşır. Lütfen poliçe numaranızı kontrol ediniz.</p>
-                    <img src="img/blog-3.png" class="img-fluid mt-3 rounded" alt="DASK Bilgilendirme">
+                    <img src="img/dask.png" class="img-fluid mt-3 rounded" alt="DASK Bilgilendirme">
                 </div>
             </div>
         </div>
@@ -950,6 +949,7 @@
             </div>
         </div>
         </div>
+
         <!--Yeni eklenecek duyurular için dinamik modal-->
         <div class="modal fade" id="dynamicModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -965,7 +965,8 @@
                 </div>
 
                 <div id="dynModalIcerik" class="text-secondary">
-                    </div>
+                    
+                </div>
 
                 <hr>              
 
@@ -977,6 +978,7 @@
         </div>
         </div>
         <!--Dinamik modal end-->
+
         <!--Duyuru ekleme kısmı scripti-->
         <script>
         let tumDuyurular = [];
@@ -1010,7 +1012,7 @@
                         </div>
                         <div class="blog-content p-4">
                             <div class="blog-comment d-flex justify-content-between mb-3">
-                                <div class="small"><span class="fa fa-calendar text-primary me-2"></span> ${duyuru.tarih}</div>                                
+                                <div class="small"><span class="fa fa-calendar text-primary me-2"></span> ${duyuru.tarih}</div>
                             </div>
                             
                             <a href="javascript:void(0)" class="h4 d-inline-block mb-3 text-dark text-decoration-none" onclick="detayAc(${duyuru.id})">${duyuru.baslik}</a>
@@ -1019,8 +1021,9 @@
                             
                             <a href="javascript:void(0)" class="fw-bold text-primary text-decoration-none" onclick="detayAc(${duyuru.id})">
                                 Detaylı Bilgi <i class="fa fa-arrow-right ms"></i>
-                            </a>                            
+                            </a>
                             
+                            ${dosyaHTML} 
                         </div>
                     </div>
                 </div>`;
