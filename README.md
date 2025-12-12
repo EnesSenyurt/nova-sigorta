@@ -1,8 +1,8 @@
-# I.proje başlangıcı
+# I.Proje Başlangıcı
 
 Web tasarımı dersi projesi için modern tasarımlı, kullanıcı hareketlerine duyarlı bir web sayfası tasarlanmamız istendi. Bu kapsamda "Nova Sigorta" ismiyle modern web sayfalarına benzer ve işlevsel bir web sitesi geliştirildi.
 
-# II.proje gereksinimlerinin analızı
+# II.Proje Gereksinimlerinin Analizi
 
 Projeyi geliştirmeye başlamadan önce sektörde ileri gelen şirketlerin(Allianz\[1\], Axa\[2\], Anadolu Sigorta\[3\],Türkiye Sigorta\[3\], HDI Sigorta\[4\]) web sayfaları incelendi. Bu sayfalarda yer alan özelliklere ve neyin nasıl yapıldığına bakarak proje için bir şablon seçildi. Şablonun teması güveni ve sakinliği simgelemek amaçlı Mavi ve Beyaz renklerden oluşuyor.
 
@@ -25,7 +25,7 @@ Proje için gereken temel özellikler:
 *   Anasayfada şirket ve hizmetler hakkında detaylı bilgilere ulaşılabilmeli, burada ayrıca müşteri yorumları, SSS bölümü vb. bulunmalı.
     
 
-# III.sistemin mimarısı
+# III.Sistemin Mimarisi
 
 Proje iki temel yapıdan (Admin paneli ve Kullanıcı arayüzü) oluşmakta.
 
@@ -57,8 +57,9 @@ Kullanıcının bilgilerini girerek şirkete email gönderdiği bir yapı bulunm
 
 ### 4)Eklenen duyuruların anasayfada görünüp duyurular sayfasında görünmemesi:
 
-### Bunu çözmek için daha önceden duyurular sayfasına özel hazırlanan duyuru ekleme modal yapısı yerine iki sayfada da aynı modal yapısını kullanarak sayfalar senkronize hale getirildi.
+ Bunu çözmek için daha önceden duyurular sayfasına özel hazırlanan duyuru ekleme modal yapısı yerine iki sayfada da aynı modal yapısını kullanarak sayfalar senkronize hale getirildi.
 
   
 
-### 5)Header ve Footer yapısı: Site içeriğindeki her sayfada header ve footer kısımlarının güncel haliyle bulunması gerekliliği karşılandı.
+### 5)Header ve Footer yapısı:
+ Site içeriğindeki her sayfada header ve footer kısımlarının güncel haliyle bulunması gerekliliği karşılandı.
