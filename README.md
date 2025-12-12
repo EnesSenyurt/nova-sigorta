@@ -39,7 +39,7 @@ Kullanıcı arayüzünde ise kullanıcının rahatça gezinebildiği, sayfalara 
 
 ### 1)Bazı resimlerin görüntülenememesi:
 
-### Sayfalara resim eklendikten sonra çalıştırıldığında bazı resimler görüntülenemiyordu. Bu durumu çözmek için FileReader API kullanarak resimleri URL’ye dönüştürüp metin olarak tarayıcı hafızasında saklayan bir yapı oluşturuldu.
+Sayfalara resim eklendikten sonra çalıştırıldığında bazı resimler görüntülenemiyordu. Bu durumu çözmek için FileReader API kullanarak resimleri URL’ye dönüştürüp metin olarak tarayıcı hafızasında saklayan bir yapı oluşturuldu.
 
   
 
